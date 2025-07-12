@@ -1,0 +1,824 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+:root
+{
+    /* Dark theme colors */
+    --text-color: #edf3ff;
+    --secondary-text-color: #000000;
+    --subheading-color: #97a7ca;
+    --placeholder-color: #c3cdde;
+    --primary-color: #101623;
+    --secondary-color: #283045;
+    --secondary-hover-color: #333e58;
+    --scrollbar-color: #626a7f;
+}
+
+body.light-theme 
+{
+    /* Light theme colors */
+    --text-color: #090c13;
+    --subheading-color: #7b8cae;
+    --placeholder-color: #606982;
+    --primary-color: #f3f7ff;
+    --secondary-color: #dce6f9;
+    --secondary-hover-color: #d2ddf2;
+    --scrollbar-color: #a2aac2;
+}
+
+body
+{
+    color: var(--text-color);
+    /* background: var(--primary-color); */
+    background-image: url(bg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    position: relative; /* Needed for the pseudo-element */
+}
+
+body::before {
+    content: ""; /* Required for pseudo-element */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.3); /* Adjust the last value for opacity (0 to 1) */
+    z-index: -1; /* Place it behind the content */
+}
+
+.container
+{
+    overflow-y: auto;
+    padding: 32px 0 60px;
+    max-height: calc(100vh - 127px);
+    scrollbar-color: var(--scrollbar-color) transparent;
+}
+
+.container :where(.app-header, .suggestion, .message, .prompt-wrapper, .disclaimer-text)
+{
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 20px;
+    max-width: 980px;
+}
+
+/* App header stylings*/
+.app-header .container
+{
+    margin-top: 4vh;
+}
+
+.app-header .heading
+{
+    font-size: 3rem;
+    width: fit-content;
+    background: linear-gradient(to right, #110DFB, #9D28F6);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.app-header .sub-heading
+{
+    font-size: 2rem;
+    margin-top: -10px;
+    color: var(--secondary-color);
+}
+
+/* Suggestion listt stylings */
+.container .suggestion
+{
+    display: flex;
+    gap: 15px;
+    margin-top: 9.5vh;
+    list-style: none;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+body.chats-active .container :where(.app-header, .suggestion)
+{
+    display: none;
+}
+
+.suggestion .suggestion-item
+{
+    width: 228px;
+    padding: 18px;
+    flex-shrink: 0;
+    display: flex;
+    cursor: pointer;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    border-radius: 12px;
+    background: var(--secondary-color);
+    transition: 0.3s ease;
+}
+
+.suggestion .suggestion-item:hover
+{
+    background: var(--secondary-hover-color);
+}
+
+.suggestion .suggestion-item .text
+{
+    font-size: 1.1rem;
+}
+
+.suggestion .suggestion-item span
+{
+    height: 45px;
+    width: 45px;
+    margin-top: 35px;
+    align-self: flex-end;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #1d7efd;
+    background: var(--primary-color);
+}
+
+.suggestion .suggestion-item:nth-child(2) span
+{
+    color: #28a745;
+}
+
+.suggestion .suggestion-item:nth-child(3) span
+{
+    color: #ffc107;
+}
+
+.suggestion .suggestion-item:nth-child(4) span
+{
+    color: #6f42c1;
+}
+
+/* Chats container stylings */
+.container .chats-container
+{
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.chats-container .message
+{
+    display: flex;
+    gap: 11px;
+    align-items: center;
+}
+
+.chats-container .message .avatar
+{
+    height: 60px;
+    width: 60px;
+    flex-shrink: 0;
+    padding: 6px;
+    align-self: flex-start;
+    margin-right: -7px;
+    border-radius: 50%;
+}
+
+.chats-container .bot-message.loading .avatar
+{
+    animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate 
+{
+    100%{
+        transform: rotate(360deg);
+    }    
+}
+
+.chats-container .message .message-text
+{
+    padding: 3px 16px;
+    word-wrap: break-word;
+    white-space: pre-line;
+}
+
+.chats-container .bot-message
+{
+    margin: 9px auto; 
+    max-width: 75%;
+    border-radius: 13px 13px 13px 3px;
+    background-color: var(--scrollbar-color);
+    color: var(--secondary-text-color);
+    background-color: transparent;
+    font-size: 20px;
+    font:bolder;
+}
+
+.chats-container .user-message
+{
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.chats-container .user-message .message-text
+{
+    padding: 12px 16px;
+    max-width: 75%;
+    border-radius: 13px 13px 3px 13px;
+    background: var(--secondary-color);
+    color: var(--secondary-text-color);
+    background-color: transparent;
+    font-size: 20px;
+    font: bolder;
+}
+
+.chats-container .user-message .img-attachment
+{
+    width: 50%;
+    margin-top: -7px;
+    border-radius: 13px 3px 13px 13px;
+}
+
+.chats-container .user-message .file-attachment
+{
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    padding: 10px;
+    margin-top: -7px;
+    border-radius: 13px 3px 13px 13px;
+    background: var(--secondary-color);
+}
+
+.chats-container .user-message .file-attachment span
+{
+    color: #1d7efd;
+}
+
+/* Prompt container stylings */
+.prompt-container-wrapper 
+{
+    max-width: 980px; 
+    margin: 0 auto; /* Center the wrapper */
+    width: 100%; /* Take up the full width of the parent, but within the max-width */
+    padding: 0 20px; /* Match your content's padding */
+    box-sizing: border-box;
+}
+
+.prompt-container
+{
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 16px 0;
+    background: var(--primary-color);
+}
+
+.prompt-container :where(.prompt-wrapper, .prompt-form, .prompt-actions)
+{
+    display: flex;
+    gap: 12px;
+    height: 56px;
+    align-items: center;
+    background: transparent;
+}
+
+.prompt-wrapper .prompt-form
+{
+    flex: 1;
+    height: 100%;
+    border-radius: 130px;
+    background: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.prompt-form .prompt-input
+{
+    height: 100%;
+    width: 100%;
+    background: none;
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    padding-left: 24px;
+    color: var(--text-color);
+}
+
+.prompt-form .prompt-input::placeholder
+{
+    color: var(--placeholder-color);
+}
+
+.prompt-wrapper button 
+{
+    width: 56px;
+    height: 100%;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    color: var(--text-color);
+    background: var(--secondary-color);
+    transition: 0.3s ease;
+}
+
+.prompt-wrapper :is(button:hover, .file-icon, #cancel-file-btn)
+{
+    background: var(--secondary-hover-color);
+}
+
+.prompt-form .prompt-actions
+{
+    gap: 5px;
+    margin-right: 7px;
+}
+
+.prompt-wrapper .prompt-form :where(.file-upload-wrapper, button, img)
+{
+    position: relative;
+    height: 45px;
+    width: 45px;
+}
+
+.prompt-form #send-prompt-btn 
+{
+    color: #fff;
+    display: none;
+    background: #1d7efd;
+}
+
+.prompt-form .prompt-input:valid ~ .prompt-actions #send-prompt-btn
+{
+    display: block;
+}
+
+.prompt-form #send-prompt-btn:hover{
+    background: #0264e3;
+}
+
+.prompt-form .file-upload-wrapper :where(button, img)
+{
+    position: absolute;
+    border-radius: 50%;
+    object-fit: cover;
+    display: none;
+}
+
+.prompt-form .file-upload-wrapper #add-file-btn,
+.prompt-form .file-upload-wrapper.active.img-attached img,
+.prompt-form .file-upload-wrapper.active.file-attached .file-icon,
+.prompt-form .file-upload-wrapper.active:hover #cancel-file-btn 
+{
+    display: block;
+}
+
+.prompt-form .file-upload-wrapper.active #add-file-btn
+{
+    display: none;
+}
+
+.prompt-form :is(#cancel-file-btn, #stop-response-btn:hover) 
+{
+    color: #d62939;
+}
+
+.prompt-form .file-icon 
+{
+    color: #1d7efd;
+}
+
+.prompt-form #stop-response-btn,
+body.bot-responding .prompt-form .file-upload-wrapper
+{
+    display: none;
+}
+
+body.bot-responding .prompt-form #stop-response-btn
+{
+    display: block;
+}
+
+.prompt-container .disclaimer-text
+{
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 16px 20px 0;
+    color: var(--placeholder-color);
+}
+
+/* Responsive media query code for small screen */
+@media (max-width: 768px) 
+{
+    .container{
+        padding: 20px 0 100px;
+    }
+
+    .app-header :is(.heading, .sub-heading){
+        font-size: 2rem;
+        line-height: 1.4;
+    }
+
+    .prompt-form .file-upload-wrapper.active #cancel-file-btn{
+        opacity: 0;
+    }
+
+    .prompt-wrapper.hide-controls :where(#theme-toggle-btn, #delete-chats-btn){
+        display: none;
+    }
+}
+
+/* --- Sidebar Styles --- */
+:root 
+{
+    /* Define sidebar widths and transition speed */
+    --sidebar-width-collapsed: 65px; /* Adjusted slightly for Material Icons */
+    --sidebar-width-expanded: 260px;
+    --transition-speed: 0.3s;
+    --sidebar-accent-color: #8ab4f8; /* Example accent, change if needed */
+    --sidebar-icon-color: var(--subheading-color); /* Use subheading color for icons */
+}
+
+.sidebar {
+    width: var(--sidebar-width-expanded);
+    height: 100vh; /* Full height */
+    background-color: var(--secondary-color); /* Use your secondary color */
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    box-sizing: border-box;
+    position: fixed; /* Keep sidebar fixed */
+    left: 0;
+    top: 0;
+    transition: width var(--transition-speed) ease, padding var(--transition-speed) ease;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1000; /* Ensure sidebar is above most content */
+    color: var(--text-color); /* Use your text color */
+    border-right: 1px solid var(--scrollbar-color); /* Optional border */
+}
+
+.sidebar.collapsed {
+    width: var(--sidebar-width-collapsed);
+    padding: 15px 5px; /* Adjust padding when collapsed */
+}
+
+/* Hide text elements when collapsed */
+.sidebar.collapsed .sidebar-header .logo,
+.sidebar.collapsed .sidebar-nav span,
+.sidebar.collapsed .new-chat-btn span:last-child, /* Target text */
+.sidebar.collapsed .nav-title,
+.sidebar.collapsed .sidebar-footer p,
+.sidebar.collapsed .sidebar-footer a,
+.sidebar.collapsed .more-link span,
+.sidebar.collapsed .close-btn {
+    display: none;
+}
+
+/* Center icons when collapsed */
+.sidebar.collapsed .new-chat-btn,
+.sidebar.collapsed .sidebar-nav ul li a {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.sidebar.collapsed .sidebar-nav ul li a .material-symbols-rounded {
+    margin-right: 0;
+}
+
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+.sidebar-header .logo {
+    font-size: 1.4em;
+    font-weight: 500; /* Adjusted weight */
+    white-space: nowrap;
+    color: var(--text-color);
+}
+
+.close-btn {
+    display: none; /* Hidden by default */
+    background: none;
+    border: none;
+    color: var(--subheading-color);
+    font-size: 1.8em;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+.menu-toggle {
+    position: fixed;
+    top: 18px; /* Adjust as needed */
+    left: 15px; /* Position over the collapsed sidebar space */
+    z-index: 1001; /* Above sidebar */
+    background: none;
+    border: none;
+    color: var(--subheading-color); /* Use subheading color */
+    font-size: 1.8em; /* Match Material Symbols size */
+    cursor: pointer;
+    padding: 5px;
+    display: block;
+    border-radius: 50%;
+    width: 40px; /* Give it some size */
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color var(--transition-speed);
+}
+.menu-toggle:hover {
+    background-color: var(--secondary-hover-color); /* Use your hover color */
+}
+
+
+.new-chat-btn {
+    background-color: var(--primary-color); /* Use primary or secondary */
+    color: var(--text-color);
+    border: 1px solid var(--scrollbar-color); /* Optional border */
+    border-radius: 25px;
+    padding: 10px 15px;
+    font-size: 0.95em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    transition: background-color var(--transition-speed);
+    white-space: nowrap;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.new-chat-btn:hover {
+    background-color: var(--secondary-hover-color);
+}
+
+.new-chat-btn .material-symbols-rounded {
+    margin-right: 15px;
+    font-size: 1.3em; /* Adjust icon size */
+    color: var(--sidebar-icon-color);
+}
+
+.sidebar-nav {
+    flex-grow: 1; /* Take available vertical space */
+    overflow-y: auto; /* Allow nav to scroll independently if needed */
+    overflow-x: hidden;
+}
+
+.nav-section {
+    margin-bottom: 15px;
+}
+
+.nav-title {
+    color: var(--subheading-color);
+    font-size: 0.8em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    padding-left: 15px;
+    white-space: nowrap;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-nav ul li a {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 20px;
+    transition: background-color var(--transition-speed);
+    font-size: 0.9em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar-nav ul li a:hover {
+    background-color: var(--secondary-hover-color); /* Use your hover color */
+}
+
+.sidebar-nav ul li a .material-symbols-rounded {
+    margin-right: 18px;
+    width: 24px; /* Fixed width for alignment */
+    text-align: center;
+    font-size: 1.3em; /* Adjust icon size */
+    color: var(--sidebar-icon-color); /* Icon color */
+    flex-shrink: 0; /* Prevent icon shrinking */
+}
+
+.sidebar-nav ul li a.more-link .material-symbols-rounded {
+    margin-right: 18px; /* Keep consistent spacing */
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid var(--scrollbar-color); /* Use scrollbar/border color */
+    margin: 20px 0;
+}
+
+.sidebar-footer {
+    margin-top: auto; /* Push footer to the bottom */
+    padding: 15px;
+    font-size: 0.8em;
+    color: var(--subheading-color);
+    border-top: 1px solid var(--scrollbar-color); /* Add separator */
+    white-space: normal;
+    flex-shrink: 0; /* Prevent footer from shrinking */
+}
+
+.sidebar-footer p {
+    margin: 0 0 5px 0;
+}
+
+.sidebar-footer a {
+    color: var(--sidebar-accent-color); /* Use accent color */
+    text-decoration: none;
+}
+
+.sidebar-footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* --- Main Content Area Adjustment --- */
+.content {
+    /* This is the <main> tag */
+    flex-grow: 1; /* Allow content to take remaining space */
+    margin-left: var(--sidebar-width-expanded); /* Leave space for the expanded sidebar */
+    width: calc(100% - var(--sidebar-width-expanded)); /* Adjust width */
+    transition: margin-left var(--transition-speed) ease, width var(--transition-speed) ease;
+    box-sizing: border-box;
+    height: 100vh; /* Make main content area full height */
+    display: flex; /* Use flex to manage the inner .container */
+    flex-direction: column; /* Stack elements vertically */
+    overflow: hidden; /* Prevent main area scroll */
+    background-color: transparent;
+}
+
+/* Your existing container setup */
+.content .container {
+    overflow-y: auto;
+    padding: 32px 20px 150px 20px; /* Increased bottom padding for fixed prompt */
+    scrollbar-color: var(--scrollbar-color) transparent;
+    width: 100%;
+    flex-grow: 1; /* Allow container to take available space */
+    box-sizing: border-box; /* Add for consistent padding behavior */
+}
+
+/* Adjustments when sidebar is collapsed */
+.sidebar.collapsed + .content {
+    margin-left: var(--sidebar-width-collapsed);
+    width: calc(100% - var(--sidebar-width-collapsed));
+}
+
+/* Adjust Prompt Container positioning relative to .content */
+.content .prompt-container {
+    position: fixed;
+    bottom: 0;
+    left: 0; 
+    transform: translateX(40%);
+    width: 100%; /* Takes width of .content */
+    max-width: 980px;
+    padding: 16px 0;
+    background: var(--primary-color);
+    z-index: 10; /* Ensure it's above scrolled content */
+    flex-shrink: 0; /* Prevent prompt container from shrinking */
+    box-sizing: border-box;
+    background-color: transparent;
+}
+
+/* Ensure prompt-wrapper is centered correctly */
+.content .prompt-container .prompt-wrapper {
+    max-width: 980px; /* Match your container max-width */
+    /* margin: 0 auto;  */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px; /* Match container padding */
+    box-sizing: border-box; /* Important if using padding */
+    width: 100%;
+    display: flex;
+    gap: 12px;
+    height: 56px;
+    align-items: center;
+    justify-content: center;
+}
+
+.content .prompt-container .disclaimer-text {
+    max-width: 980px; /* Match your container max-width */
+    /* margin: 0 auto; 0 */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 16px 20px 0;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--placeholder-color);
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    /* Example: Make sidebar overlay on smaller screens */
+    .sidebar {
+         /* Optionally start collapsed */
+         width: var(--sidebar-width-collapsed);
+         padding: 15px 5px;
+
+         /* To make it overlay instead */
+         /* position: fixed; */
+         /* left: calc(-1 * var(--sidebar-width-expanded)); */ /* Hide off-screen */
+         /* transition: left var(--transition-speed) ease; */
+         /* z-index: 1100; */ /* Above everything */
+    }
+
+    .sidebar.expanded {
+         width: var(--sidebar-width-expanded);
+         padding: 15px;
+         /* If overlaying: */
+         /* left: 0; */
+    }
+
+     /* When collapsed (initial state if overlaying) */
+     .sidebar.collapsed {
+         width: var(--sidebar-width-collapsed);
+         padding: 15px 5px;
+         /* If overlaying: */
+         /* left: calc(-1 * var(--sidebar-width-expanded)); */
+     }
+
+    .content {
+        margin-left: var(--sidebar-width-collapsed); /* Adjust based on initial state */
+        width: calc(100% - var(--sidebar-width-collapsed));
+        /* If overlaying: */
+        /* margin-left: 0; */
+        /* width: 100%; */
+    }
+
+     /* Adjust content when sidebar is expanded (if overlaying) */
+    /* .sidebar.expanded + .content {
+          Potentially add margin or keep full width
+         margin-left: 0;
+         width: 100%;
+     } */
+
+    .menu-toggle {
+        left: 10px;
+        top: 10px;
+    }
+
+    .close-btn {
+        display: flex; /* Show close button inside sidebar */
+        align-items: center;
+        justify-content: center;
+    }
+
+     /* Body class for overlay effect */
+     body.sidebar-expanded .content {
+         /* Example: Add overlay effect */
+         /* filter: brightness(0.7); */
+         /* pointer-events: none; */ /* Prevent interaction with content below */
+     }
+     body.sidebar-expanded .menu-toggle {
+         /* Maybe hide toggle when sidebar open */
+         /* display: none; */
+     }
+
+     /* Adjust prompt container on small screens if needed */
+    .content .prompt-container .prompt-wrapper {
+        padding: 0 10px; /* Less padding on mobile */
+    }
+     .content .container {
+        padding: 20px 10px 120px 10px; /* Adjust padding */
+     }
+
+}
+
+/* Minor fix for your existing code - ensure buttons inside prompt-wrapper don't shrink */
+.prompt-wrapper > button {
+    flex-shrink: 0;
+}
